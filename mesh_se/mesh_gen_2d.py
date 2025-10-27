@@ -1,6 +1,312 @@
 import numpy as np
 from scipy.spatial import Delaunay
 
+class TriMesh():
+    def __init__(self, mesh_filename,order = 1):
+        self.mesh_filename = mesh_filename
+        self.order = order
+
+    def _extract_coordinates(self):
+        # 提取网格顶点坐标
+        try:
+            with open(self.mesh_filename,'r') as f:
+                lines = f.readlines()
+        except:
+            raise FileNotFoundError(f"Cannot Open Mesh File {self.mesh_filename}")
+
+        vertex_lines = []
+        reading_vertices = False
+
+        for line in lines:
+            line = line.strip()
+            if not reading_vertices:
+                if '# Mesh vertex coordinates' in line:
+                    reading_vertices = True
+                continue
+
+            if line == '':
+                break
+
+            vertex_lines.append(line)
+
+        # 解析为浮点矩阵
+        vertex_matrix = np.zeros((len(vertex_lines),2),dtype=np.float64)
+        for i,line in enumerate(vertex_lines):
+            data = np.fromstring(line,sep=' ',dtype=np.float64)
+            if data.size == 2:
+                vertex_matrix[i,:] = data
+            else:
+                raise Exception(f"The format of {i+1} line is abnormal : {line}")
+
+        return vertex_matrix
+
+    def _extract_vtxs(self):
+        # 提取几何模型顶点索引
+        try:
+            with open(self.mesh_filename, 'r') as f:
+                lines = f.readlines()
+        except:
+            raise FileNotFoundError(f"Cannot Open Mesh File {self.mesh_filename}")
+
+        found_type0 = False
+        elements_count = -1
+        reading_elements = False
+        reading_indices = False
+        elements = []
+        indices = []
+
+        # 遍历每一行
+        for line_count,line in enumerate(lines,start=1):
+
+            if elements_count == len(indices) and elements_count == len(elements):
+                # 完成读取
+                break
+
+            line = line.strip()
+            if not line:    # 跳过空行
+                continue
+
+            # 查找 “# Type #0”
+            if not found_type0 and "# Type #0" in line:
+                found_type0 = True
+                continue
+
+            if found_type0:
+                # 提取元素数量
+                if "# number of elements" in line:
+                    tokens = line.split()
+                    try:
+                        elements_count = int(tokens[0])
+                    except:
+                        raise ValueError(f"Can not extract number of elements from {line}")
+
+                # 读取元素状态
+                if "# Elements" in line:
+                    reading_elements = True
+                    reading_indices = True
+                    continue
+
+                # 读取索引状态
+                if "# Geometric entity indices" in line:
+                    reading_elements = False
+                    reading_indices = True
+                    continue
+
+                # 读取元素数据
+                if reading_elements and not line.startswith("#"):
+                    try:
+                        elements.append(int(line))
+                    except ValueError:
+                        pass
+                    continue
+
+                # 读取元素索引
+                if reading_indices and not line.startswith("#"):
+                    try:
+                        indices.append(int(line))
+                    except ValueError:
+                        pass
+                    continue
+
+        if not elements:
+            raise Exception("Cannot find elements in mesh file.")
+        if not indices:
+            raise Exception("Cannot find indices in mesh file.")
+
+        elements = np.array(elements)
+
+        reordered = np.zeros_like(elements)
+
+        if np.max(indices) > elements_count or np.min(indices) < 0:
+            raise IndexError(f"Invalid indices: {np.min(indices)} - {np.max(indices)}")
+
+        for i in range(elements_count):
+            reordered[indices[i]] = elements[i]
+
+        elements = reordered
+        return elements
+
+    def _extract_edgs(self):
+        # 提取边界元素
+        try:
+            with open(self.mesh_filename, 'r') as f:
+                lines = f.readlines()
+        except:
+            raise FileNotFoundError(f"Cannot Open Mesh File {self.mesh_filename}")
+
+        elements_data = []
+        indices = []
+        reading_elements = False
+        reading_indices = False
+        found_type1 = False
+        elements_count = -1
+
+        for line_count,line in enumerate(lines,start=1):
+
+            if elements_count == len(indices) and elements_count == len(elements_data):
+                break
+
+            line = line.strip()
+            if not line: continue
+
+            if not found_type1 and "# Type #1" in line:
+                found_type1 = True
+                continue
+
+            if found_type1:
+                # 提取元素数量
+                if "# number of elements" in line:
+                    tokens = line.split()
+                    try:
+                        elements_count = int(tokens[0])
+                    except:
+                        raise ValueError(f"Can not extract number of elements from {line}")
+                    continue
+
+                # 读取元素状态
+                if "# Elements" in line:
+                    reading_elements = True
+                    reading_indices = False
+                    continue
+
+                # 读取索引状态
+                if "# number of geometric entity indices" in line:
+                    reading_elements = False
+                    reading_indices = True
+                    continue
+
+                # 读取元素数据
+                if reading_elements and not line.startswith("#"):
+                    elements_data.append(line)
+                    continue
+
+                # 读取所属的边
+                if reading_indices and not line.startswith("#"):
+                    try:
+                        indices.append(int(line))
+                    except ValueError:
+                        pass
+                    continue
+
+        # 解析为整数矩阵
+        edgs_matrix = np.zeros((elements_count,3),dtype=int)
+        for i,line in enumerate(elements_data):
+            data = np.fromstring(line,sep=' ')
+            if data.size == 2:
+                edgs_matrix[i,0:2] = data
+                edgs_matrix[i,2] = indices[i]
+            else:
+                raise Exception(f"The format of {i+1} line is abnormal : {line}")
+
+        return edgs_matrix
+
+    def _extract_tris(self):
+        # 提取三角形元素
+        try:
+            with open(self.mesh_filename, 'r') as f:
+                lines = f.readlines()
+        except:
+            raise FileNotFoundError(f"Cannot Open Mesh File {self.mesh_filename}")
+
+        elements_data = []
+        indices = []
+        reading_elements = False
+        reading_indices = False
+        found_type2 = False
+        elements_count = -1
+
+        for line_count, line in enumerate(lines, start=1):
+
+            if elements_count == len(indices) and elements_count == len(elements_data):
+                break
+
+            line = line.strip()
+            if not line: continue
+
+            if not found_type2 and "# Type #2" in line:
+                found_type2 = True
+                continue
+
+            if found_type2:
+                # 提取元素数量
+                if "# number of elements" in line:
+                    tokens = line.split()
+                    try:
+                        elements_count = int(tokens[0])
+                    except:
+                        raise ValueError(f"Can not extract number of elements from {line}")
+                    continue
+
+                # 读取元素状态
+                if "# Elements" in line:
+                    reading_elements = True
+                    reading_indices = False
+                    continue
+
+                # 读取索引状态
+                if "# number of geometric entity indices" in line:
+                    reading_elements = False
+                    reading_indices = True
+                    continue
+
+                # 读取元素数据
+                if reading_elements and not line.startswith("#"):
+                    elements_data.append(line)
+                    continue
+
+                # 读取所属的边
+                if reading_indices and not line.startswith("#"):
+                    try:
+                        indices.append(int(line))
+                    except ValueError:
+                        pass
+                    continue
+
+
+        # 解析为整数矩阵
+        tris_matrix = np.zeros((elements_count, 4), dtype=int)
+        for i, line in enumerate(elements_data):
+            data = np.fromstring(line, sep=' ')
+            if data.size == 3:
+                tris_matrix[i, 0:3] = data
+                tris_matrix[i, 3] = indices[i]
+            else:
+                raise Exception(f"The format of {i + 1} line is abnormal : {line}")
+
+        return tris_matrix
+
+    def tri_import_comsol_mesh(self):
+        """
+        从COMSOL导入网格
+
+        returns:
+        ne  :   划分单元数
+        ng  :   全局节点的数量
+        x,y :   划分点坐标
+        c   :   联系矩阵c(i,j)(i=1,...,Ne; j=1,2,3),表示第i个单元的第j个节点所对应的整体节点编号
+                取值范围为1, ..., Ng
+        efl :   假设第i个单元有m个插值结点,单元节点标记矩阵, efl(i,j)(i=1,...,Ne j=1,...,m)
+                规定为j个节点为边界节点,则设为边界条数,若不为边界点则为0
+        glf :   整体节点标记矩阵glf(i)(i=1,...,Ng),使glf(i)值与efl对应节点相同
+        """
+        coordinates = self._extract_coordinates()
+        vtxs = self._extract_vtxs()
+        edgs = self._extract_edgs()
+        tris = self._extract_tris()
+
+        ne = tris.shape[0]
+        ng = coordinates.shape[0]
+
+        x = coordinates[tris[:, :3], 0]
+        y = coordinates[tris[:, :3], 1]
+
+        c = tris[:,:3]
+
+        return ne, ng, x, y, c
+
+
+
+
 def trgl3_condiv_disk(ndiv):
     """
     从四个硬编码单元出发,通过连续细分各级单元组实现对单位直径圆盘三角剖分
@@ -183,6 +489,7 @@ def trgl3_condiv_disk(ndiv):
                 ng = ng + 1
 
     return ne, ng, x, y, p, c, efl, glf
+
 
 
 def trgl3_dvt_sqr():

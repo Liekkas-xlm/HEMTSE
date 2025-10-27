@@ -1,0 +1,10 @@
+{
+    "python.analysis.extraPaths": [
+        "./math",
+        "./assemble",
+        "./solver",
+        "./node",
+        "./mesh",
+        "./disp"
+    ]
+}

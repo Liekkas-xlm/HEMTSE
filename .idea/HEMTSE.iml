@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="PYTHON_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$/../HEMTSE">
-      <sourceFolder url="file://$MODULE_DIR$/../HEMTSE/calculate_se" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../HEMTSE/disp_se" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../HEMTSE/math_se" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../HEMTSE/mesh_se" isTestSource="false" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/calculate_se" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/disp_se" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/input_se" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/math_se" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mesh_se" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

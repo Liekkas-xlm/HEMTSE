@@ -100,6 +100,13 @@ def emm_tnt_lob(x1, y1, x2, y2, x3, y3):
 
     return emm
 
+def e_tnt_lob():
+    """
+    计算插值基函数的积分
+    return: 一阶插值基函数的积分
+    """
+    #TODO : 完善高阶插值基函数
+    return 1/6
 
 def dirichlet_assemble(km, bm, ng, gfl_difx):
     """
@@ -128,3 +135,40 @@ def dirichlet_assemble(km, bm, ng, gfl_difx):
             k_new[i, i] = 1
 
     return k_new, b_new
+
+def gdm_assemble(ne, ng, coordinates, c):
+    """
+    组装整体扩散矩阵,考虑Neuman和dirichket边界条件
+
+    params:
+    ne : 划分单元总数
+    coordinates : 坐标点矩阵
+    c : 节点矩阵
+
+
+    return:
+    gdm : 整体扩散矩阵
+
+    """
+    gdm = np.zeros((ng, ng))
+    for l in range(ne):
+        j = c[l, 0]
+        x1 = coordinates[j, 0]
+        y1 = coordinates[j, 1]
+
+        j = c[l, 1]
+        x2 = coordinates[j, 0]
+        y2 = coordinates[j, 1]
+
+        j = c[l, 2]
+        x3 = coordinates[j, 0]
+        y3 = coordinates[j, 1]
+
+        edm_elm = edm_tnt_lob(x1, y1, x2, y2, x3, y3)
+        for i in range(3):
+            il = c[l, i]
+            for j in range(3):
+                jl = c[l, j]
+                gdm[il, jl] = gdm[il, jl] + edm_elm[i, j]
+
+    return gdm

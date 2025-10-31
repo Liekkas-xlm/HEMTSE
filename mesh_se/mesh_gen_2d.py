@@ -297,15 +297,9 @@ class TriMesh():
         ne = tris.shape[0]
         ng = coordinates.shape[0]
 
-        x = coordinates[tris[:, :3], 0]
-        y = coordinates[tris[:, :3], 1]
-
         c = tris[:,:3]
 
-        return ne, ng, x, y, c
-
-
-
+        return ne, ng, coordinates, c
 
 def trgl3_condiv_disk(ndiv):
     """

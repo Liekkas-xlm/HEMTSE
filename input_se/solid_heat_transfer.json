@@ -1,0 +1,39 @@
+{
+  "solid": {
+    "thermal conductivity" : "From Material",
+    "density" : "From Material",
+    "constant pressure heat capacity": "From Material"
+  },
+
+  "initial value": {
+    "T" : 300
+  },
+
+  "thermal insulation": {
+    "boundary": [1,3,5,8,9,11,12,14,15,16]
+  },
+
+  "heat source": {
+    "domain": [1,2,3],
+    "source": {
+      "type": "generallized source",
+      "Q0_type": "user_define",
+      "Q0_value": 10E18
+    }
+  },
+
+  "temperture": {
+    "boundary": [2],
+    "T0": 300
+  },
+
+  "heat flux": {
+    "material type": "solid",
+    "flux": {
+      "flux type": "convective heat flux",
+      "heat transfer coefficient": "user-define",
+      "h": 10,
+      "Text": 300
+    }
+  }
+}

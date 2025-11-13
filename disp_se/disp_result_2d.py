@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.tri import Triangulation
+from scipy.interpolate import griddata
 
 
 def plot3_2dfem(ne, ng, p, c, f):
@@ -56,3 +58,35 @@ def plot3_2dfem(ne, ng, p, c, f):
     ax.set_aspect("equal", adjustable="box")  # 确保X轴和Y轴单位长度相同[1,2](@ref)
     # Add colorbar
     fig.colorbar(coll, ax=ax)
+
+def disp_colorbar(coodinates, temp):
+    x = coodinates[:, 0]
+    y = coodinates[:, 1]
+
+    plt.figure(figsize=(8,8))
+    triang = Triangulation(x, y)
+    plt.tripcolor(triang,temp,cmap='jet')
+    plt.colorbar(label='Temperature(K)')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.axis('equal')
+    plt.title('Temperature Distribution')
+
+def disp_colorbar2(coodinates, temp):
+    x = coodinates[:, 0]
+    y = coodinates[:, 1]
+    xi = np.linspace(min(x), max(x), 100)
+    yi = np.linspace(min(y), max(y), 100)
+    X,Y = np.meshgrid(xi,yi)
+
+    grid_temp = griddata(coodinates, temp, (X,Y), method='cubic')
+
+    plt.figure(figsize=(8,8))
+    plt.imshow(grid_temp.T,extent=(min(x),max(x),min(y),max(y)),origin='lower', cmap='jet')
+    plt.colorbar(label='Temperature(K)')
+    plt.scatter(x,y,c = temp,edgecolors='k',cmap='jet')
+    plt.title('Temperature Distribution')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+
+

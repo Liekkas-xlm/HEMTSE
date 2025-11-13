@@ -1,6 +1,8 @@
 import json
 from typing import Dict, List, Any, Optional
 
+import numpy as np
+
 
 class SolidHeatTransfer:
     """
@@ -35,6 +37,7 @@ class SolidHeatTransfer:
         self.temperature = {"boundary": [], "TG": 300}
         self.heat_flux = {
             "material type": "solid",
+            "boundary":[],
             "flux": {
                 "flux type": "convective heat flux",
                 "heat transfer coefficient": "user-define",
@@ -248,5 +251,49 @@ class SolidHeatTransfer:
         return f"SolidHeatTransfer({self.to_dict()})"
 
 
-# 使用示例
+def extract_dirc_bdr(edgs, dirc_bdr_marks, dirc_values):
+    """
+    从边矩阵提取狄利克雷边界行并赋值
 
+    params:
+    edgs : 前两列为节点编号,最后一列为边界编号
+    dirc_bdr_marks : 狄利克雷边界编号
+    dirc_values : 对应的边界条件值,可以是单个数也可以是矩阵
+
+    return:
+    dirc_bdr : 返回只属于狄利克雷边界的行
+    """
+
+    dirc_bdr_marks = np.atleast_1d(dirc_bdr_marks) - 1
+
+    mask = np.isin(edgs[:,-1], dirc_bdr_marks)
+    dirc_bdr = edgs[mask].copy()
+
+    #TODO 狄利克雷边界返回值再优化,可以适配不同的值
+    dirc_bdr[:,-1] = dirc_values
+
+    return dirc_bdr
+
+def find_edge_domains(target_edgs, tris):
+    tris_edgs = []
+    domains = []
+
+    for tri in tris:
+        n1, n2, n3, domain = tri
+        edges = {
+            tuple(sorted((n1, n2))),
+            tuple(sorted((n2, n3))),
+            tuple(sorted((n3, n1))),
+        }
+        tris_edgs.append((edges, domain))
+
+    for e in target_edgs:
+        edge = tuple(sorted(e[:2]))
+        found_domain = None
+        for edges, domain in tris_edgs:
+            if edge in edges:
+                found_domain = domain
+                break
+        domains.append(found_domain)
+
+    return domains

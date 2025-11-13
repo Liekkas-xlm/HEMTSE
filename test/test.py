@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+import pyvista as pv
 
 from pathlib import Path
 
@@ -10,13 +11,14 @@ from math_se.lobatto import *
 from math_se.base_func import *
 from mesh_se.mesh_gen_2d import *
 from input_se.bdr_load import *
+from input_se.material_load import *
 from calculate_se.em_2d import *
+from disp_se.disp_result_2d import *
 
-ne = 4
-ng = 5
-coordinates = np.array([[0,0],[1,0],[0,1],[-1,0],[0,-1]],dtype=np.float64)
-c = np.array([[1,2,3],[4,1,3],[5,1,4],[5,2,1]],dtype=int)-1
+def modify(a):
+    a[0,0] = 99
+    a = np.zeros((2,2))
 
-gdm = gdm_assemble(ne,ng,coordinates,c)
-
-print(gdm)
+A = np.ones((2,2))
+modify(A)
+print(A)

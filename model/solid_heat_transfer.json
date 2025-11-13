@@ -18,17 +18,18 @@
     "source": {
       "type": "generallized source",
       "Q0_type": "user_define",
-      "Q0_value": 10E18
+      "Q0_value": 1E18
     }
   },
 
-  "temperture": {
+  "temperature": {
     "boundary": [2],
     "T0": 300
   },
 
   "heat flux": {
     "material type": "solid",
+    "boundary": [7,10,13],
     "flux": {
       "flux type": "convective heat flux",
       "heat transfer coefficient": "user-define",

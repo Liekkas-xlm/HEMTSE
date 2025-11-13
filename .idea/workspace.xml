@@ -5,15 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3af0fa44-5ed5-4208-a484-3ac26b9f14a9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/HEMTSE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HEMTSE.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SE.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/disp_se/output_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/input_se/material_load.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/model/material.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/calculate_se/em_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculate_se/em_2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/disp_se/disp_result_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/disp_se/disp_result_2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_se/bdr_load.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_se/bdr_load.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/input_se/solid_heat_transfer.json" beforeDir="false" afterPath="$PROJECT_DIR$/model/solid_heat_transfer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/diffusion_function_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/diffusion_function_2d.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mesh_se/mesh_gen_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/mesh_se/mesh_gen_2d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/2DHEMT.mphtxt" beforeDir="false" afterPath="$PROJECT_DIR$/model/2DHEMT.mphtxt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -21,12 +22,19 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="34oWIeEm7X2ousIf8erclA26aAa" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -35,14 +43,22 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Python.diffusion_function_2d.executor": "Run",
+    "Python.em_2d.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "dev",
     "last_opened_file_path": "/home/liekkas/HEMT/HEMTSE",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/model" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -59,5 +75,16 @@
       <updated>1761880326340</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -2,8 +2,9 @@ import numpy as np
 from scipy.spatial import Delaunay
 
 class TriMesh():
-    def __init__(self, mesh_filename,order = 1):
+    def __init__(self, mesh_filename, mesh_unit = "um" ,order = 1):
         self.mesh_filename = mesh_filename
+        self.mesh_unit = mesh_unit
         self.order = order
 
     def _extract_coordinates(self):
@@ -38,6 +39,8 @@ class TriMesh():
             else:
                 raise Exception(f"The format of {i+1} line is abnormal : {line}")
 
+        if self.mesh_unit == "um":
+            vertex_matrix = vertex_matrix * 1e-6
         return vertex_matrix
 
     def _extract_vtxs(self):
@@ -269,7 +272,7 @@ class TriMesh():
             data = np.fromstring(line, sep=' ')
             if data.size == 3:
                 tris_matrix[i, 0:3] = data
-                tris_matrix[i, 3] = indices[i]
+                tris_matrix[i, 3] = indices[i]-1
             else:
                 raise Exception(f"The format of {i + 1} line is abnormal : {line}")
 
@@ -280,15 +283,15 @@ class TriMesh():
         从COMSOL导入网格
 
         returns:
-        ne  :   划分单元数
-        ng  :   全局节点的数量
-        x,y :   划分点坐标
-        c   :   联系矩阵c(i,j)(i=1,...,Ne; j=1,2,3),表示第i个单元的第j个节点所对应的整体节点编号
-                取值范围为1, ..., Ng
-        efl :   假设第i个单元有m个插值结点,单元节点标记矩阵, efl(i,j)(i=1,...,Ne j=1,...,m)
-                规定为j个节点为边界节点,则设为边界条数,若不为边界点则为0
+        ne  :  划分单元数
+        ng  :  全局节点的数量
+        x,y :  划分点坐标
+        tris:  联系矩阵c(i,j)(i=1,...,Ne; j=1,2,3),表示第i个单元的第j个节点所对应的整体节点编号
+               取值范围为1, ..., Ng
+        edgs:  矩阵,前两列是线段端点,最后一列是所属的边界
         glf :   整体节点标记矩阵glf(i)(i=1,...,Ng),使glf(i)值与efl对应节点相同
         """
+        #TODO 加入边界单元,这应该是一个list,list元素应该是矩阵,list的index代表其所属的边界,矩阵应该是3列的矩阵,前两列代表节点编号,最后一列代表其所属的domain
         coordinates = self._extract_coordinates()
         vtxs = self._extract_vtxs()
         edgs = self._extract_edgs()
@@ -297,9 +300,8 @@ class TriMesh():
         ne = tris.shape[0]
         ng = coordinates.shape[0]
 
-        c = tris[:,:3]
+        return ne, ng, coordinates, edgs, tris
 
-        return ne, ng, coordinates, c
 
 def trgl3_condiv_disk(ndiv):
     """

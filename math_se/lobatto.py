@@ -43,3 +43,19 @@ def int_lob(m, func):
         intergral = intergral + func(r[i]) * w[i]
 
     return intergral
+
+def legendre_diff_mat(zeta_z):
+    """
+    一阶微分矩阵
+    """
+    m = len(zeta_z)
+    zeta_z_arr = zeta_z.reshape(1, -1)
+    sub_zeta = zeta_z_arr.T - zeta_z_arr + np.eye(m)
+    neg_sub_zeta = 1 / sub_zeta
+    p = np.prod(sub_zeta, axis=1).reshape(1, -1)
+    p1 = -p / p.T * neg_sub_zeta
+    sum_zeta = np.sum(neg_sub_zeta, axis=1).reshape(1, -1)
+    dij = p1 + (sum_zeta * np.eye(m))
+    return dij.T
+
+

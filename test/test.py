@@ -14,11 +14,8 @@ from input_se.bdr_load import *
 from input_se.material_load import *
 from calculate_se.em_2d import *
 from disp_se.disp_result_2d import *
+from calculate_se.em_spectral import *
 
-def modify(a):
-    a[0,0] = 99
-    a = np.zeros((2,2))
-
-A = np.ones((2,2))
-modify(A)
-print(A)
+coords = [np.array([[0,0],[1,1]]),np.array([[0,1],[0,1]])]
+km = emm_qua(coords, 1, basis = "GLL")
+print(km)

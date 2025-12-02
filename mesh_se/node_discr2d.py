@@ -98,3 +98,4 @@ def gen_standard_tri_avag(m):
         p[-1, 0] = vi[nt]
         p[-1, 1] = vi[nt]
     return p
+

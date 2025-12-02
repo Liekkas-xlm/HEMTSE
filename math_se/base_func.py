@@ -35,8 +35,9 @@ def lagrange_func(roots, zp):
     return p2 / p1
 
 
-def diff_lagrange():
+def diff_lagrange(roots):
     """
-    拉格朗日插值基函数的微分
+    拉格朗日插值基函数的矩阵
     """
+
     pass

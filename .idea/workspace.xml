@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3af0fa44-5ed5-4208-a484-3ac26b9f14a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/disp_se/output_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/input_se/material_load.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/material.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/calculate_se/em_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/calculate_se/em_2d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/disp_se/disp_result_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/disp_se/disp_result_2d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_se/bdr_load.py" beforeDir="false" afterPath="$PROJECT_DIR$/input_se/bdr_load.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input_se/solid_heat_transfer.json" beforeDir="false" afterPath="$PROJECT_DIR$/model/solid_heat_transfer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/diffusion_function_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/diffusion_function_2d.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mesh_se/mesh_gen_2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/mesh_se/mesh_gen_2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_se/base_func.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_se/base_func.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_se/chebyshev.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_se/chebyshev.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/math_se/lobatto.py" beforeDir="false" afterPath="$PROJECT_DIR$/math_se/lobatto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mesh_se/node_discr2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/mesh_se/node_discr2d.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,6 +32,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="34oWIeEm7X2ousIf8erclA26aAa" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -45,6 +44,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "Python.diffusion_function_2d.executor": "Run",
     "Python.em_2d.executor": "Run",
+    "Python.em_spectral.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
@@ -58,6 +58,31 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/model" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="diffusion_function_2d" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="HEMTSE" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.10 (2)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/diffusion_function_2d.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
